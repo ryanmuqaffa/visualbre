@@ -1,0 +1,17 @@
+{
+  "name": "Visual Stock",
+  "short_name": "Visual Stock",
+  "description": "Laporan stok per jetty dan shift",
+  "lang": "id",
+  "start_url": "index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f0eee6",
+  "theme_color": "#b4532f",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
