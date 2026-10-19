@@ -1,0 +1,51 @@
+name: Build APK
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Pasang dependensi
+        run: npm install
+
+      - name: Siapkan folder www
+        run: npm run build
+
+      - name: Tambah platform Android
+        run: npx cap add android
+
+      - name: Buat ikon dan splash
+        run: npx @capacitor/assets generate --android --assetPath assets
+
+      - name: Sinkronkan
+        run: npx cap sync android
+
+      - name: Pakai keystore debug repositori (tanda tangan konsisten)
+        run: |
+          mkdir -p ~/.android
+          cp debug.keystore ~/.android/debug.keystore
+
+      - name: Build APK debug
+        working-directory: android
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: visual-stock-apk
+          path: android/app/build/outputs/apk/debug/app-debug.apk
